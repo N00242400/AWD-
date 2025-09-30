@@ -53,7 +53,7 @@ class PetSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Luna',
+                'name' => 'Lunar',
                 'species' => 'Cat',
                 'age' => 1,
                 'description' => 'Shy but affectionate kitten.',
