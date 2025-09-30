@@ -12,9 +12,10 @@
                     <h3 class="font-semibold text-lg mb-4">"Pet Details"</h3>
                     <x-pet-details
                     :name="$pet->name"
-                    :breed="$pet->breed"
                     :age="$pet->age"
-
+                    :species="$pet->species"
+                    :description="$pet->description"
+                    :image="$pet->image"
                 />
                 </div>
             </div>

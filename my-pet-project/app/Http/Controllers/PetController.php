@@ -37,7 +37,8 @@ class PetController extends Controller
      */
     public function show(Pet $pet)
     {
-        //
+       return view('pets.show')->with('pet', $pet);
+
     }
 
     /**
