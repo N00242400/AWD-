@@ -5,16 +5,14 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Pet;
-use Carbon\Carbon;
-
 
 class PetSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function run(): void {
-        $currentTimestamp = Carbon::now();
+    public function run(): void
+    {
         Pet::insert([
             [
                 'name' => 'Bella',
@@ -58,6 +56,15 @@ class PetSeeder extends Seeder
                 'age' => 1,
                 'description' => 'Shy but affectionate kitten.',
                 'image' => 'luna.webp',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Chirpy',
+                'species' => 'Bird',
+                'age' => 3,
+                'description' => 'Sings beautifully every morning.',
+                'image' => 'chirpy.jpg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
