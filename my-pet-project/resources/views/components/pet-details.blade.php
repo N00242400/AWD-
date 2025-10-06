@@ -4,7 +4,7 @@
     <img 
         src="{{ asset('images/' . $image) }}" 
         alt="{{ $image }}" 
-        class="w-full h-48 object-cover"
+        class="w-full h-80 object-cover"
      
     >
 

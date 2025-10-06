@@ -18,6 +18,9 @@
                      <x-nav-link :href="route('pets.index')" :active="request()->routeIs('pets.index')">
                         {{ __('View All Pets') }}
                         </x-nav-link>
+                          <x-nav-link :href="route('pets.create')" :active="request()->routeIs('pets.create')">
+                        {{ __('Add a pet') }}
+                        </x-nav-link>
                 </div>
             </div>
 

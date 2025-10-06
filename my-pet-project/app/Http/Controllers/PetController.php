@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pet;
 use Illuminate\Http\Request;
+use Illuminate\Suppoer\Facades\Storage;
 
 class PetController extends Controller
 {
@@ -21,17 +22,44 @@ class PetController extends Controller
      */
     public function create()
     {
-        //
+        return view('pets.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+public function store(Request $request)
+{
+    // Validate input
+   $request->validate([
+        'name' => 'required',
+        'species' => 'required',
+        'age' => 'required|integer',
+        'description' => 'required|max:500',
+        'image' => 'required|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
+    ]);
 
+  // Handle image upload
+if ($request->hasFile('image')) {
+    $imageName = time() . '.' . $request->image->extension();
+    $request->image->move(public_path('images'), $imageName);
+}
+
+
+    // Create the pet in the database
+    Pet::create([
+        'name' => $request->name,
+         'species' => $request->species,
+        'age' =>  $request->age,
+        'description' =>  $request->description,
+        'image' => $imageName,
+        'created_at' =>now(),
+        'updated_at' =>now()
+    ]);
+
+    // Redirect to index page with success message
+    return to_route('pets.index')->with('success', 'Pet added successfully!');
+}
     /**
      * Display the specified resource.
      */
