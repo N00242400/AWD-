@@ -74,7 +74,8 @@ if ($request->hasFile('image')) {
      */
     public function edit(Pet $pet)
     {
-        //
+        // Return the 'pets.edit' view and pass the current pet to pre-fill the form
+        return view('pets.edit')->with('pet', $pet);
     }
 
     /**
@@ -82,9 +83,41 @@ if ($request->hasFile('image')) {
      */
     public function update(Request $request, Pet $pet)
     {
-        //
+        // Validate input, image is optional on update
+        $request->validate([
+            'name' => 'required',
+            'species' => 'required',
+            'age' => 'required|integer',
+            'description' => 'required|max:500',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
+        ]);
+    
+        // Handle image upload if new image provided
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if ($pet->image && file_exists(public_path('images/' . $pet->image))) {
+                unlink(public_path('images/' . $pet->image));
+            }
+            // Save new image
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $pet->image = $imageName;
+        }
+    
+        // Update pet with validated data and image path
+        $pet->update([
+            'name' => $request->name,
+            'species' => $request->species,
+            'age' => $request->age,
+            'description' => $request->description,
+            'image' => $pet->image,
+            'updated_at' => now(),
+        ]);
+    
+        // Redirect to pets list with success
+        return redirect()->route('pets.index')->with('success', 'Pet updated successfully!');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */
