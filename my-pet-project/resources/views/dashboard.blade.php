@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-<div class="py-12" style="background-image: url('/images/bg.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; min-height: 100vh;">
+<div class="py-12" style="background-image: url('/images/bg.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center; min-height: 100vh;">
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white bg-opacity-80 overflow-hidden shadow-sm sm:rounded-lg">

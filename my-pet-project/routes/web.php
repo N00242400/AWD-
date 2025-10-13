@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/pets/create', [PetController::class, 'create'])->name('pets.create');
     Route::get('/pets/{pet}', [PetController::class, 'show'])->name('pets.show');
     Route::post('/pets', [PetController::class, 'store'])->name('pets.store');
-
+    //url to call pet controller- edit function//
     Route::get('/pets/{pet}/edit', [PetController::class, 'edit'])->name('pets.edit');
     Route::put('/pets/{pet}', [PetController::class, 'update'])->name('pets.update');
     Route::delete('/pets/{pet}', [PetController::class, 'destroy'])->name('pets.destroy');

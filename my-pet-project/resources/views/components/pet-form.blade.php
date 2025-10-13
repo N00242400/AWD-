@@ -2,7 +2,7 @@
 {{-- method - what type of action (saving data) --}}
 {{-- The form always sends data as POST. --}}
 
-@props(['action', 'method'])
+@props(['action', 'method','pet'])
 
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
     @csrf

@@ -110,7 +110,7 @@ if ($request->hasFile('image')) {
             'species' => $request->species,
             'age' => $request->age,
             'description' => $request->description,
-            'image' => $pet->image,
+            'image' => $pet->$imageName,
             'updated_at' => now(),
         ]);
     
