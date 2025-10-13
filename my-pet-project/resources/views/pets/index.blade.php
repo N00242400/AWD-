@@ -7,6 +7,13 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($pets as $pet)
                         <div class="border-4 rounded-lg shadow-md">
+
+                               <!-- Sucess Alert -->
+                            <x-alert-success>
+                                {{session('success')}}
+                            </x-alert-success>
+                          
+
                             <a href="{{ route('pets.show', $pet) }}">
                                 <x-pet-card 
                                     :name="$pet->name" 

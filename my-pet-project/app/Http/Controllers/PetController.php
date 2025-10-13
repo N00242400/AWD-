@@ -110,12 +110,12 @@ if ($request->hasFile('image')) {
             'species' => $request->species,
             'age' => $request->age,
             'description' => $request->description,
-            'image' => $pet->$imageName,
+            'image' => $pet->image,
             'updated_at' => now(),
         ]);
     
-        // Redirect to pets list with success
-        return redirect()->route('pets.index')->with('success', 'Pet updated successfully!');
+        // Redirect to pets show page with success
+        return redirect()->route('pets.show', $pet)->with('success', 'Pet updated successfully!');
     }
     
     /**
@@ -123,6 +123,8 @@ if ($request->hasFile('image')) {
      */
     public function destroy(Pet $pet)
     {
-        //
+        $pet->delete();
+          // Redirect to pets index page with success
+        return redirect()->route('pets.index')->with('success', 'Pet deleted successfully!');
     }
 }
