@@ -8,18 +8,20 @@ use Illuminate\Suppoer\Facades\Storage;
 
 class PetController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    
+    public function index(Request $request)
     {
-        $pets= Pet::all();
-        return view('pets.index',compact('pets'));
+        // Get all pets, or filter by species if selected
+        //checking if user selected a specie other wise show all//
+        $pets = Pet::when($request->filled('species'), function ($query) use ($request) {
+            $query->where('species', $request->species);
+        })->get();
+    //passes pet to the view//
+        return view('pets.index', compact('pets'));
     }
+    
 
-    /**
-     * Show the form for creating a new resource.
-     */
+  
     public function create()
     {
         return view('pets.create');
