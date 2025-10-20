@@ -20,21 +20,16 @@
         @endif
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
-            @if (Route::has('login'))
-                
-            @endif
-        </header>
+      
         <div class="bg-white">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="flex flex-col lg:flex-row items-center">
 
         <!-- Left -->
         <div class="text-center lg:text-left p-4 ">
-          <h1 class="text-6xl font-extrabold text-gray-900 text-center ">
-            Discover & Manage Your Pets
-          </h1>
-
+        <h1 class="text-6xl font-bold text-gray-900 mr-4 text-center">
+                    Meet The Pets
+                  </h1>
           <div class="flex flex-col md:flex-row justify-center gap-10 py-10 ">
             
             @guest
