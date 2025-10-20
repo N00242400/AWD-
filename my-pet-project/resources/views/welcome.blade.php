@@ -25,50 +25,6 @@
                 
             @endif
         </header>
-
-   <div class="bg-white">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <div class="flex flex-col lg:flex-row items-center">
-
-        <!-- Left -->
-        <div class="text-center lg:text-left p-4 ">
-          <h1 class="text-6xl font-extrabold text-gray-900 text-center ">
-            Discover & Manage Your Pets
-          </h1>
-
-          <div class="flex flex-col md:flex-row justify-center gap-10 py-10 ">
-
-            <!-- login -->
-            <a href="{{ route('login') }}" class="flex flex-col items-center">
-
-              <div class="w-60 h-60 rounded bg-blue-100 shadow-lg flex items-center justify-center hover:bg-blue-200 transition">
-                <img src="/images/viewpet.png" alt="Login" class="w-28 h-28" />
-              </div>
-              <p class="mt-4 text-center text-gray-900 font-semibold text-lg">Login</p>
-            </a>
-
-            <!-- Add A Pet -->
-            <a href="{{ route('register') }}" class="flex flex-col items-center">
-
-              <div class="w-60 h-60 rounded bg-green-100 shadow-lg flex items-center justify-center hover:bg-green-200 transition">
-                <img src="/images/addpet.png" alt="register" class="w-30 h-30" />
-              </div>
-              <p class="mt-4 text-center text-gray-900 font-semibold text-lg">Register</p>
-            </a>
-
-          </div>
-        </div>
-
-        <!-- Right -->
-        <div class="flex items-center justify-center">
-          <img src="/images/dashboard-bg.png" alt="Dashboard Image" class="w-[48rem] h-[48rem] object-contain rounded" />
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-        @if (Route::has('login'))
         <div class="bg-white">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="flex flex-col lg:flex-row items-center">
@@ -80,17 +36,38 @@
           </h1>
 
           <div class="flex flex-col md:flex-row justify-center gap-10 py-10 ">
+            
+            @guest
+            <!-- Show Login and Register only if guest (not logged in) -->
 
-            <!-- login -->
             <a href="{{ route('login') }}" class="flex flex-col items-center">
-
               <div class="w-60 h-60 rounded bg-blue-100 shadow-lg flex items-center justify-center hover:bg-blue-200 transition">
-                <img src="/images/viewpet.png" alt="Login" class="w-28 h-28" />
+              <img src="/images/login.png" alt="Login" class="pt-4" style="width: 10rem; height: 14rem;" />
+
+              </div>
+            
+              <p class="mt-4 text-center text-gray-900 font-semibold text-lg">Login</p>
+            </a>
+
+            <a href="{{ route('register') }}" class="flex flex-col items-center">
+              <div class="w-60 h-60 rounded bg-green-100 shadow-lg flex items-center justify-center hover:bg-green-200 transition">
+              <img src="/images/register.png" alt="Register" style="width: 10rem; height: 10rem;" />
+
+              </div>
+              <p class="mt-4 text-center text-gray-900 font-semibold text-lg">Register</p>
+            </a>
+            @endguest
+
+            @auth
+            <!-- Show Dashboard link only when authenticated -->
+
+            <a href="{{ url('/dashboard') }}" class="flex flex-col items-center">
+              <div class="w-60 h-60 rounded bg-blue-100 shadow-lg flex items-center justify-center hover:bg-blue-200 transition">
+                <img src="/images/dashboard.png" alt="Dashboard" class="w-28 h-28" />
               </div>
               <p class="mt-4 text-center text-gray-900 font-semibold text-lg">Dashboard</p>
             </a>
-
-         
+            @endauth
 
           </div>
         </div>
@@ -103,6 +80,7 @@
       </div>
     </div>
   </div>
-        @endif
+
+
     </body>
 </html>
