@@ -28,7 +28,6 @@ Once I had my view all pets working I then moved on to implemting a page for ind
 This step really showed me how routes and controllers all worked together to format an interactalble page while looking good also.
 
 Create & Store :
-Absolutely! Here’s a polished version of your text with typos corrected, grammar fixed, and the flow improved for clarity:
 
 To create a new pet, the user adds a pet through a form and saves the entry. If successful, a success message appears. I started this process by adding the routes (pets.create and pets.store) in web.php to handle navigation when the user clicks “Add New Pet.”
 The PetController’s create() method loads the create view, which displays a form for entering pet details. To make the form reusable (for both creating and editing pets), I created a petForm component. When the form is submitted, the store() method in PetController validates the input, inserts the new pet into the database, and redirects the user back to the index page.
@@ -54,7 +53,18 @@ For styling, I used Tailwind CSS to make the app visually appealing. I added ima
 While doing this, I ran into challenges with user-specific content. To handle this, I used the Blade directive @guest to show certain elements only to visitors who are not logged in, ensuring the dashboard and welcome page displayed correctly depending on authentication. I also had to carefully overwrite some styles on the show page to maintain a consistent appearance.
 These experiences helped me understand how to combine Blade directives and Tailwind styling to manage different user views and layouts effectively.
 
+While styling I also added a cancel button on my edit page to give the user an oppurtunity to go back to the show page and not save any changes made.
+
 What I learned:
 Throughout this project, I learned how Laravel’s MVC structure connects every part of an application. I learned how routes handle user navigation, controllers manage logic, models interact with the database, and Blade views display the results. I became more confident working with CRUD operations.I also learned about form validation, using old() to retain user input, and how session flash messages can give users instant feedback. Implementing features like image upload and deletion taught me how Laravel handles files securely and efficiently. Most importantly, this project helped me understand how each layer of Laravel works together to build a complete, functional web app, from data handling to user experience and design.
 
 One thing I also learned during this project is the importance of making incremental commits. Initially, I only committed once at the end of each day and synced my work, rather than explaining each step in my commit messages. I now understand that commits should clearly describe the changes made at each stage of development, which helps with tracking progress and makes collaboration easier. Moving forward, I will make smaller, descriptive commits regularly.
+
+
+References :
+https://laravel.com/docs/5.5/middleware
+https://tailwindcss.com/docs/installation/using-vite
+https://flowbite.com/docs/components/buttons/?utm_source=chatgpt.com
+https://tailwindcss.com/plus/ui-blocks
+https://nerdcave.com/tailwind-cheat-sheet
+https://laravel.com/docs/12.x/eloquent
