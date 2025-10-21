@@ -2,15 +2,14 @@
     <div class="py-12 bg-white">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white">
-                
+
                 <!-- Page Header -->
                 <div class="flex items-center justify-center p-4">
-                  <h1 class="text-6xl font-extrabold text-gray-900 mr-4 text-center">
-                    Meet The Pets
-                  </h1>
-                  <img src="/images/paws.png" alt="Paws logo" class="w-28 h-28" />
-</div>
-
+                    <h1 class="text-6xl font-extrabold text-gray-900 mr-4 text-center">
+                        Meet The Pets
+                    </h1>
+                    <img src="/images/paws.png" alt="Paws logo" class="w-28 h-28" />
+                </div>
 
                 <!-- Success Message -->
                 <div class="p-6">
@@ -21,13 +20,14 @@
                     <!-- Filter Form -->
                     <form method="GET" action="{{ route('pets.index') }}" class="mb-6">
                         <label for="species" class="mr-2 font-semibold">Filter by Species:</label>
-                        <select name="species" id="species" class="border rounded w-20  px-2 py-1">
+                        <select name="species" id="species" class="border rounded w-20 px-2 py-1">
                             <option value="">All</option>
                             <option value="Cat" {{ request('species') == 'Cat' ? 'selected' : '' }}>Cat</option>
                             <option value="Dog" {{ request('species') == 'Dog' ? 'selected' : '' }}>Dog</option>
                             <option value="Rabbit" {{ request('species') == 'Rabbit' ? 'selected' : '' }}>Rabbit</option>
                             <option value="Lizard" {{ request('species') == 'Lizard' ? 'selected' : '' }}>Lizard</option>
                             <option value="Bird" {{ request('species') == 'Bird' ? 'selected' : '' }}>Bird</option>
+                            <option value="Rat" {{ request('species') == 'Rat' ? 'selected' : '' }}>Rat</option>
                         </select>
                         <button 
                             type="submit" 
@@ -48,31 +48,9 @@
                                         :image="$pet->image"
                                     />
                                 </a>
-
-                                <p class="text-gray-700 text-sm mt-4 text-center">
+                                <p class="text-gray-700 text-sm mt-8 mb-8 mx-8 text-center">
                                     {{ Str::limit($pet->description, 50, '...') }}
                                 </p>
-
-                                <div class="mt-4 flex justify-center gap-4 my-4">
-                                    <!-- Edit Button -->
-                                    <a href="{{ route('pets.edit', $pet) }}"
-                                       class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
-                                              hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
-                                        Edit
-                                    </a>
-
-                                    <!-- Delete Button -->
-                                    <form action="{{ route('pets.destroy', $pet) }}" method="POST"
-                                          onsubmit="return confirm('Are you sure you want to delete this pet?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                                class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
-                                                       hover:bg-gray-100 hover:text-red-500 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
                             </div>
                         @endforeach
                     </div>

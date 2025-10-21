@@ -51,6 +51,7 @@
               </div>
               <p class="mt-4 text-center text-gray-900 font-semibold text-lg">Register</p>
             </a>
+            
             @endguest
 
             @auth
@@ -63,6 +64,8 @@
               <p class="mt-4 text-center text-gray-900 font-semibold text-lg">Dashboard</p>
             </a>
             @endauth
+            
+           
 
           </div>
         </div>
