@@ -17,6 +17,14 @@
                         :method="'PUT'"
                         :pet="$pet"
                     />
+
+                    <div class="mt-6">
+                        <a href="{{ route('pets.show', $pet) }}"
+                        class="py-2.5 px-5 text-sm font-medium text-white bg-red-500 rounded-full border border-gray-200 
+                        hover:bg-red-600 focus:z-10 focus:ring-4 focus:ring-red-100 transition">
+                           Cancel
+                        </a>
+
                 </div>
             </div>
         </div>
