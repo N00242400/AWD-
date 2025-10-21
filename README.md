@@ -8,7 +8,7 @@ Laravel uses migrations which allow tables to be created and updated.Seeders are
 
 App development 
 ERD:
-In the first week I created an ERD diagram to set up my tables and relationships.I decided to do my project on a pet system.This includes a main pet table with a many to many relationship to 
+In the first week I created an ERD diagram to set up my tables and relationships.I decided to do my project on a pet system.This includes a main pet table that I will work on for this assigment.
 
 Project setup:
 I then set up and instlalled laravel,composer and node.js to create my project.I focused on implemeting user authentication.I installed laravel breeze with blade templates to handle all views and routes automatically. This provides the structure for registration,login and logout. 
@@ -46,7 +46,15 @@ I also added the delete button on the index page to delete pets. In my web.php t
 Once this was done I tested all my crud methods and can now move on to further styling.
 
 
-- filtering/ styling 
+Filtering:
+I implemented a species filter and styled components using Tailwind CSS. This improved usability and made the UI more interactive and visually appealing.The form uses GET to send the selected species to the pets.index route as a query parameter. The <select> dropdown lists all species options, and the current selection is retained using {{ request('species') == 'Cat' ? 'selected' : '' }}. When the user clicks Go, the form submits the choice, which the controller uses to filter pets displayed on the page. Tailwind CSS classes style the form neatly.I understand that this filter is hard-coded and would not automatically include new species added to the database, but this is the only way I currently understand how to implement it.For more complex projects I will try and devlop on this.
 
+Styling:
+For styling, I used Tailwind CSS to make the app visually appealing. I added images, logos, and adjusted layouts to improve the look of the pages. I also customized the dashboard and welcome page to match the design of my pet project.
+While doing this, I ran into challenges with user-specific content. To handle this, I used the Blade directive @guest to show certain elements only to visitors who are not logged in, ensuring the dashboard and welcome page displayed correctly depending on authentication. I also had to carefully overwrite some styles on the show page to maintain a consistent appearance.
+These experiences helped me understand how to combine Blade directives and Tailwind styling to manage different user views and layouts effectively.
 
+What I learned:
 Throughout this project, I learned how Laravel’s MVC structure connects every part of an application. I learned how routes handle user navigation, controllers manage logic, models interact with the database, and Blade views display the results. I became more confident working with CRUD operations.I also learned about form validation, using old() to retain user input, and how session flash messages can give users instant feedback. Implementing features like image upload and deletion taught me how Laravel handles files securely and efficiently. Most importantly, this project helped me understand how each layer of Laravel works together to build a complete, functional web app, from data handling to user experience and design.
+
+One thing I also learned during this project is the importance of making incremental commits. Initially, I only committed once at the end of each day and synced my work, rather than explaining each step in my commit messages. I now understand that commits should clearly describe the changes made at each stage of development, which helps with tracking progress and makes collaboration easier. Moving forward, I will make smaller, descriptive commits regularly.
