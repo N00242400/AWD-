@@ -21,6 +21,8 @@
             </a>
 
             <!-- Add A Pet -->
+              @if(auth()->user()->role === 'admin')
+            
             <a href="{{ route('pets.create') }}" class="flex flex-col items-center">
 
               <div class="w-60 h-60 rounded bg-green-100 shadow-lg flex items-center justify-center hover:bg-green-200 transition">
@@ -28,6 +30,7 @@
               </div>
               <p class="mt-4 text-center text-gray-900 font-semibold text-lg">Add A Pet</p>
             </a>
+             @endif
 
           </div>
         </div>
