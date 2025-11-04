@@ -15,6 +15,20 @@
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
+        
+            <!-- adding drop down for registration form that allows users to choose user or admin-->
+        
+        <div>
+            <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+            <select id = "role" name = "role" class = "mt-1 w-full" required>
+                <option value="user" selected>User</option>
+                 <option value="admin">Admin</option>
+            </select >
+            @error('role')
+            <span class = "text-red-500 text-xs mt-1">{{$message}}</span>
+            @enderror
+        </div>
+                
 
         <!-- Password -->
         <div class="mt-4">
@@ -44,19 +58,6 @@
                 {{ __('Already registered?') }}
             </a>
 
-            <!-- adding drop down for registration form that allows users to choose user or admin-->
-
-        <div>
-            <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-            <select id = "role" name = "role" class = "mt-1 block w-full" required>
-                <option value="user" selected>User</option>
-                 <option value="admin">Admin</option>
-            </select >
-            @error('role')
-            <span class = "text-red-500 text-xs mt-1">{{$message}}</span>
-            @enderror
-        </div>
-                
 
             <x-primary-button class="ms-4">
                 {{ __('Register') }}
