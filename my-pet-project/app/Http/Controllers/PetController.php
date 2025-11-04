@@ -20,11 +20,14 @@ class PetController extends Controller
         return view('pets.index', compact('pets'));
     }
     
-
   
     public function create()
     {
+        if(auth()->user()->role !== 'admin'){
+            return redirect()->route('pets.index')->with('error','Access denied.');
+        }
         return view('pets.create');
+    
     }
 
     /**
