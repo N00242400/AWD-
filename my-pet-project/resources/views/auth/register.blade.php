@@ -44,6 +44,20 @@
                 {{ __('Already registered?') }}
             </a>
 
+            <!-- adding drop down for registration form that allows users to choose user or admin-->
+
+        <div>
+            <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+            <select id = "role" name = "role" class = "mt-1 block w-full" required>
+                <option value="user" selected>User</option>
+                 <option value="admin">Admin</option>
+            </select >
+            @error('role')
+            <span class = "text-red-500 text-xs mt-1">{{$message}}</span>
+            @enderror
+        </div>
+                
+
             <x-primary-button class="ms-4">
                 {{ __('Register') }}
             </x-primary-button>
