@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\Pet;
 use Illuminate\Http\Request;
 use Illuminate\Suppoer\Facades\Storage;
@@ -24,6 +25,7 @@ class PetController extends Controller
     public function create()
     {
         if(auth()->user()->role !== 'admin'){
+
             return redirect()->route('pets.index')->with('error','Access denied.');
         }
         return view('pets.create');
@@ -70,7 +72,8 @@ if ($request->hasFile('image')) {
      */
     public function show(Pet $pet)
     {
-       return view('pets.show')->with('pet', $pet);
+      $pet->load('appointments.user');
+      return view('pets.show',compact('pet'));
 
     }
 

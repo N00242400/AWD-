@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetController;
@@ -30,4 +31,11 @@ Route::middleware('auth')->group(function () {
 
 });
 
+
+// Global appointments routes
+Route::resource('appointments', AppointmentController::class);
+
+// Appointments for a specific pet
+Route::post('pets/{pet}/appointments', [AppointmentController::class, 'storeForPet'])
+    ->name('pets.appointments.store');
 require __DIR__.'/auth.php';
