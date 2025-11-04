@@ -26,6 +26,31 @@
                         />
                     </div>
                 </div>
+                        <!-- Appointment info -->
+                        <h4 class="font-semibold text-md mt-8">Appointments</h4>
+
+                        @if($pet->appointments->isEmpty())
+                            <p class="text-gray-600">No appointments yet.</p>
+                        @else
+                            <ul class="mt-4 space-y-4">
+                                @foreach($pet->appointments as $appointment)
+                                    <li class="border p-4 rounded-lg">
+                                        <p class="font-semibold">
+                                            Scheduled by: {{ $appointment->user->name }} 
+                                            ({{ $appointment->created_at->format('M d, Y') }})
+                                        </p>
+                                        <p>Type: {{ $appointment->appointment_type  }}</p>
+                                        <p>Vet: {{ $appointment->vet_name  }}</p>
+                                        <p>Clinic: {{ $appointment->clinic_name  }}</p>
+                                        <p>Appointment Date: {{ $appointment->appointment_date->format('M d, Y') }}</p>
+                                        @if($appointment->vet_notes)
+                                            <p>Notes: {{ $appointment->vet_notes }}</p>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+
 
                
                 <div class="mt-8 flex justify-center gap-4">
