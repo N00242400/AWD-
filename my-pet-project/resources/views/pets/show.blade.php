@@ -50,6 +50,35 @@
                                 @endforeach
                             </ul>
                         @endif
+                         <!-- Adding Appointment  -->
+                              <h4 class="font-semibold text-md mt-8">Add an appointment</h4>
+                              <form action = " {{route ('appointments.store', $pet )}}" method="POST" class="mt-4">
+                                @csrf
+                                 <div class="mb-4">
+                                           <select name="appointment_type" id="appointment_type" class="w-full border rounded p-2">
+                                                <option value="checkup">Checkup</option>
+                                                <option value="vaccination">Vaccination</option>
+                                                <option value="surgery">Surgery</option>
+                                                <option value="grooming">Grooming</option>
+                                            </select>
+
+                                            <label for="vet_name" class="block text-gray-700 font-medium mb-2">Vet Name</label>
+                                            <input type="text" name="vet_name" id="vet_name" class="w-full border rounded p-2" required>
+                              
+                                            <label for="clinic_name" class="block text-gray-700 font-medium mb-2">Clinic Name</label>
+                                            <input type="text" name="clinic_name" id="clinic_name" class="w-full border rounded p-2" required>
+                                    
+                                            <label for="appointment_date" class="block text-gray-700 font-medium mb-2">Appointment Date</label>
+                                            <input type="date" name="appointment_date" id="appointment_date" class="w-full border rounded p-2" required>
+                                    
+                                            <label for="vet_notes" class="block text-gray-700 font-medium mb-2">Vet Notes</label>
+                                            <textarea name="vet_notes" id="vet_notes" rows="3" class="w-full border rounded p-2"></textarea>
+                                        </div>
+
+                                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                            Add Appointment
+                                        </button>
+                                    </form>
 
 
                
