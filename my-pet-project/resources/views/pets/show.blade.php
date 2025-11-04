@@ -29,6 +29,7 @@
 
                
                 <div class="mt-8 flex justify-center gap-4">
+                    @if(auth()->user()->role === 'admin')
                     <!-- Edit Button -->
                     <a href="{{ route('pets.edit', $pet) }}"
                        class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
@@ -47,6 +48,7 @@
                             Delete
                         </button>
                     </form>
+                    @endif
 
                     <!-- Back Button -->
                     <a href="{{ route('pets.index') }}" 
