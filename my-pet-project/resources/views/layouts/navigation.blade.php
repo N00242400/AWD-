@@ -22,6 +22,12 @@
                 </div>
             </div>
 
+            @if(auth()->user()->role === 'admin')
+            <x-nav-link :href ="route('pets.create')":active="request()->request()->routeIs('pets.create')">
+                {{__('Create New Pet')}}
+            </x-nav-link>
+            @endif
+
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
