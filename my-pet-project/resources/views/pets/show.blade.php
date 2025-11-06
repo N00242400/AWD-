@@ -56,6 +56,7 @@
                               <form action = " {{route ('pets.appointments.store', $pet )}}" method="POST" class="mt-4">
                                 @csrf
                                  <div class="mb-4">
+                                    <!-- Appointment Type Dropdown -->
                                            <select name="appointment_type" id="appointment_type" class="w-full border rounded p-2">
                                                 <option value="checkup">Checkup</option>
                                                 <option value="vaccination">Vaccination</option>
@@ -75,7 +76,7 @@
                                             <label for="vet_notes" class="block text-gray-700 font-medium mb-2">Vet Notes</label>
                                             <textarea name="vet_notes" id="vet_notes" rows="3" class="w-full border rounded p-2"></textarea>
                                         </div>
-
+                                        <!-- Submit Button -->
                                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                                             Add Appointment
                                         </button>

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+//Appointment model represents the appointments table in your database//
 class Appointment extends Model
 {
     use HasFactory;
