@@ -36,6 +36,6 @@ Route::middleware('auth')->group(function () {
 Route::resource('appointments', AppointmentController::class);
 
 // Appointments for a specific pet
-Route::post('pets/{pet}/appointments', [AppointmentController::class, 'storeForPet'])
+Route::post('pets/{pet}/appointments', [AppointmentController::class, 'store'])
     ->name('pets.appointments.store');
 require __DIR__.'/auth.php';

@@ -32,17 +32,16 @@ class AppointmentController extends Controller
 {
     // Validate input
     $request->validate([
-        'user_id' => 'required|exists:users,id',
         'appointment_type' => 'nullable|in:checkup,vaccination,surgery,grooming',
-        'vet_name' => 'nullable|string|max:25',
-        'clinic_name' => 'nullable|string|max:55',
+        'vet_name' => 'required|string|max:25',
+        'clinic_name' => 'required|string|max:55',
         'appointment_date' => 'required|date|after_or_equal:today',
-        'vet_notes' => 'nullable|string',
+        'vet_notes' => 'nullable|string|max:500',
     ]);
 
     // Create the appointment
     $pet->appointments()->create([
-        'user_id' => $request->user_id,
+        'user_id' => auth()->id(),
         'appointment_type' => $request->appointment_type,
         'vet_name' => $request->vet_name,
         'clinic_name' => $request->clinic_name,

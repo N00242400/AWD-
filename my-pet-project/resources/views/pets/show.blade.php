@@ -42,7 +42,8 @@
                                         <p>Type: {{ $appointment->appointment_type  }}</p>
                                         <p>Vet: {{ $appointment->vet_name  }}</p>
                                         <p>Clinic: {{ $appointment->clinic_name  }}</p>
-                                        <p>Appointment Date: {{ $appointment->appointment_date->format('M d, Y') }}</p>
+                                      <!--  strtotime() converts the string from the database to a timestamp -->
+                                          <p>Appointment Date: {{ date('M d, Y', strtotime($appointment->appointment_date)) }}</p>
                                         @if($appointment->vet_notes)
                                             <p>Notes: {{ $appointment->vet_notes }}</p>
                                         @endif
@@ -52,7 +53,7 @@
                         @endif
                          <!-- Adding Appointment  -->
                               <h4 class="font-semibold text-md mt-8">Add an appointment</h4>
-                              <form action = " {{route ('appointments.store', $pet )}}" method="POST" class="mt-4">
+                              <form action = " {{route ('pets.appointments.store', $pet )}}" method="POST" class="mt-4">
                                 @csrf
                                  <div class="mb-4">
                                            <select name="appointment_type" id="appointment_type" class="w-full border rounded p-2">
