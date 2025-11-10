@@ -71,7 +71,7 @@
                 @if(auth()->user()->role === 'admin')
                     <!-- Adding Appointment -->
                     <h4 class="font-semibold text-md mt-8">Add an appointment</h4>
-                    <form action="{{ route('appointments.store', $pet) }}" method="POST" class="mt-4">
+                    <form action="{{ route('pets.appointments.store', $pet) }}" method="POST" class="mt-4">
                         @csrf
 
                         <div class="mb-4">
