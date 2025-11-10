@@ -41,6 +41,8 @@ class AppointmentController extends Controller
 
     // Create the appointment
     $pet->appointments()->create([
+        //Laravel’s authentication helper function//
+        //linking appointment to the user who is currently logged in.//
         'user_id' => auth()->id(),
         'appointment_type' => $request->appointment_type,
         'vet_name' => $request->vet_name,

@@ -47,6 +47,22 @@
                                         @if($appointment->vet_notes)
                                             <p>Notes: {{ $appointment->vet_notes }}</p>
                                         @endif
+                                        <!--  admin(vet) can edit and delete the appointment -->
+                                        @if ($appointment->user->is(auth()->user()) || auth()->user()->role === 'admin')
+                                         <!-- Edit Button -->
+                                        <a href="{{ route('appointment.edit', $appointment) }}" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
+                                                hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
+                                            {{__('Edit Appointment')}}
+                                        </a>
+                                        <form method="POST" action = "{{route('appointments.destroy',$appointment) }}">
+                                            @csrf
+                                            @method('delete')
+                                            <x-danger-button :href ="route('appointments.destroy', $appointment)"
+                                                            onclick ="event.preventDefault(); this.closest('form').submit();">
+                                                            {{__('Delete Appointment') }}
+                                        </x-danger-button>
+                                        </form>
+                                        @endif
                                     </li>
                                 @endforeach
                             </ul>
