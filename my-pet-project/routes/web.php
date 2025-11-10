@@ -37,5 +37,7 @@ Route::resource('appointments', AppointmentController::class);
 
 // Appointments for a specific pet
 Route::post('pets/{pet}/appointments', [AppointmentController::class, 'store'])
-    ->name('pets.appointments.store');
+    ->name('appointments.store');
+
+
 require __DIR__.'/auth.php';

@@ -6,8 +6,6 @@
 
     <div class="py-12 bg-white">
         <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
-
-            <!-- Pet Card -->
             <div class="bg-white">
 
                 <!-- Pet Info Section -->
@@ -26,103 +24,104 @@
                         />
                     </div>
                 </div>
-                        <!-- Appointment info -->
-                        <h4 class="font-semibold text-md mt-8">Appointments</h4>
 
-                        @if($pet->appointments->isEmpty())
-                            <p class="text-gray-600">No appointments yet.</p>
-                        @else
-                            <ul class="mt-4 space-y-4">
-                                @foreach($pet->appointments as $appointment)
-                                    <li class="border p-4 rounded-lg">
-                                        <p class="font-semibold">
-                                            Scheduled by: {{ $appointment->user->name }} 
-                                            ({{ $appointment->created_at->format('M d, Y') }})
-                                        </p>
-                                        <p>Type: {{ $appointment->appointment_type  }}</p>
-                                        <p>Vet: {{ $appointment->vet_name  }}</p>
-                                        <p>Clinic: {{ $appointment->clinic_name  }}</p>
-                                      <!--  strtotime() converts the string from the database to a timestamp -->
-                                          <p>Appointment Date: {{ date('M d, Y', strtotime($appointment->appointment_date)) }}</p>
-                                        @if($appointment->vet_notes)
-                                            <p>Notes: {{ $appointment->vet_notes }}</p>
-                                        @endif
-                                        <!--  admin(vet) can edit and delete the appointment -->
-                                        @if ($appointment->user->is(auth()->user()) || auth()->user()->role === 'admin')
-                                         <!-- Edit Button -->
-                                        <a href="{{ route('appointment.edit', $appointment) }}" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
-                                                hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
-                                            {{__('Edit Appointment')}}
-                                        </a>
-                                        <form method="POST" action = "{{route('appointments.destroy',$appointment) }}">
-                                            @csrf
-                                            @method('delete')
-                                            <x-danger-button :href ="route('appointments.destroy', $appointment)"
-                                                            onclick ="event.preventDefault(); this.closest('form').submit();">
-                                                            {{__('Delete Appointment') }}
+                <!-- Appointment info -->
+                <h4 class="font-semibold text-md mt-8">Appointments</h4>
+
+                @if($pet->appointments->isEmpty())
+                    <p class="text-gray-600">No appointments yet.</p>
+                @else
+                    <ul class="mt-4 space-y-4">
+                        @foreach($pet->appointments as $appointment)
+                            <li class="border p-4 rounded-lg">
+                                <p class="font-semibold">
+                                    Scheduled by: {{ $appointment->user->name }} 
+                                    ({{ $appointment->created_at->format('M d, Y') }})
+                                </p>
+                                <p>Type: {{ $appointment->appointment_type }}</p>
+                                <p>Vet: {{ $appointment->vet_name }}</p>
+                                <p>Clinic: {{ $appointment->clinic_name }}</p>
+                                <p>Appointment Date: {{ date('M d, Y', strtotime($appointment->appointment_date)) }}</p>
+
+                                @if($appointment->vet_notes)
+                                    <p>Notes: {{ $appointment->vet_notes }}</p>
+                                @endif
+
+                                <!-- Admin or owner can edit/delete -->
+                                @if ($appointment->user->is(auth()->user()) || auth()->user()->role === 'admin')
+                                    <a href="{{ route('appointments.edit', $appointment) }}" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
+                                        hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
+                                        {{ __('Edit Appointment') }}
+                                    </a>
+
+                                    <form method="POST" action="{{ route('appointments.destroy', $appointment) }}" class="inline">
+                                        @csrf
+                                        @method('delete')
+                                        <x-danger-button
+                                            onclick="event.preventDefault(); this.closest('form').submit();">
+                                            {{ __('Delete Appointment') }}
                                         </x-danger-button>
-                                        </form>
-                                        @endif
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endif
-
-                        @if(auth()->user()->role === 'admin')
-                         <!-- Adding Appointment  -->
-                              <h4 class="font-semibold text-md mt-8">Add an appointment</h4>
-                              <form action = " {{route ('pets.appointments.store', $pet )}}" method="POST" class="mt-4">
-                                @csrf
-                                 <div class="mb-4">
-                                    <!-- Appointment Type Dropdown -->
-                                           <select name="appointment_type" id="appointment_type" class="w-full border rounded p-2">
-                                                <option value="checkup">Checkup</option>
-                                                <option value="vaccination">Vaccination</option>
-                                                <option value="surgery">Surgery</option>
-                                                <option value="grooming">Grooming</option>
-                                            </select>
-
-                                            <label for="vet_name" class="block text-gray-700 font-medium mb-2">Vet Name</label>
-                                            <input type="text" name="vet_name" id="vet_name" class="w-full border rounded p-2" required>
-                              
-                                            <label for="clinic_name" class="block text-gray-700 font-medium mb-2">Clinic Name</label>
-                                            <input type="text" name="clinic_name" id="clinic_name" class="w-full border rounded p-2" required>
-                                    
-                                            <label for="appointment_date" class="block text-gray-700 font-medium mb-2">Appointment Date</label>
-                                            <input type="date" name="appointment_date" id="appointment_date" class="w-full border rounded p-2" required>
-                                    
-                                            <label for="vet_notes" class="block text-gray-700 font-medium mb-2">Vet Notes</label>
-                                            <textarea name="vet_notes" id="vet_notes" rows="3" class="w-full border rounded p-2"></textarea>
-                                        </div>
-                                        <!-- Submit Button -->
-                                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                            Add Appointment
-                                        </button>
                                     </form>
-                                    @endif
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
 
-
-               
-                <div class="mt-8 flex justify-center gap-4">
-                    @if(auth()->user()->role === 'admin')
-                    <!-- Edit Button -->
-                    <a href="{{ route('pets.edit', $pet) }}"
-                       class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
-                              hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
-                        Edit
-                    </a>
-
-                    <!-- Delete Button -->
-                    <form action="{{ route('pets.destroy', $pet) }}" method="POST"
-                          onsubmit="return confirm('Are you sure you want to delete this pet?');">
+                @if(auth()->user()->role === 'admin')
+                    <!-- Adding Appointment -->
+                    <h4 class="font-semibold text-md mt-8">Add an appointment</h4>
+                    <form action="{{ route('appointments.store', $pet) }}" method="POST" class="mt-4">
                         @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                                class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
-                                       hover:bg-gray-100 hover:text-red-500 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
-                            Delete
+
+                        <div class="mb-4">
+                            <label for="appointment_type" class="block text-gray-700 font-medium mb-2">Appointment Type</label>
+                            <select name="appointment_type" id="appointment_type" class="w-full border rounded p-2">
+                                <option value="checkup">Checkup</option>
+                                <option value="vaccination">Vaccination</option>
+                                <option value="surgery">Surgery</option>
+                                <option value="grooming">Grooming</option>
+                            </select>
+
+                            <label for="vet_name" class="block text-gray-700 font-medium mb-2">Vet Name</label>
+                            <input type="text" name="vet_name" id="vet_name" class="w-full border rounded p-2" required>
+
+                            <label for="clinic_name" class="block text-gray-700 font-medium mb-2">Clinic Name</label>
+                            <input type="text" name="clinic_name" id="clinic_name" class="w-full border rounded p-2" required>
+
+                            <label for="appointment_date" class="block text-gray-700 font-medium mb-2">Appointment Date</label>
+                            <input type="date" name="appointment_date" id="appointment_date" class="w-full border rounded p-2" required>
+
+                            <label for="vet_notes" class="block text-gray-700 font-medium mb-2">Vet Notes</label>
+                            <textarea name="vet_notes" id="vet_notes" rows="3" class="w-full border rounded p-2"></textarea>
+                        </div>
+
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                            Add Appointment
                         </button>
                     </form>
+                @endif
+
+                <div class="mt-8 flex justify-center gap-4">
+                    @if(auth()->user()->role === 'admin')
+                        <!-- Edit Button -->
+                        <a href="{{ route('pets.edit', $pet) }}"
+                           class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
+                                  hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
+                            Edit
+                        </a>
+
+                        <!-- Delete Button -->
+                        <form action="{{ route('pets.destroy', $pet) }}" method="POST"
+                              onsubmit="return confirm('Are you sure you want to delete this pet?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                    class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
+                                           hover:bg-gray-100 hover:text-red-500 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
+                                Delete
+                            </button>
+                        </form>
                     @endif
 
                     <!-- Back Button -->
@@ -132,7 +131,6 @@
                         Back to Menu
                     </a>
                 </div>
-
             </div>
         </div>
     </div>

@@ -91,6 +91,11 @@ if ($request->hasFile('image')) {
      */
     public function update(Request $request, Pet $pet)
     {
+          // Check if the  user is an admin
+    if (auth()->user()->role !== 'admin') {
+        return redirect()->route('pets.index');
+          
+    }
         // Validate input, image is optional on update
         $request->validate([
             'name' => 'required',
