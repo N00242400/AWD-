@@ -105,8 +105,12 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Appointment $appointment)
-    {
-        //
-    }
+ public function destroy(Appointment $appointment)
+{
+
+    $appointment->delete();
+       return redirect()->route('pets.show',$appointment->pet_id)
+                ->with('success','Appointment updated succesfully.');
+}
+
 }

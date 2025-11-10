@@ -86,16 +86,10 @@
         @enderror
     </div>
 
-
-
-
-
-
-
-
-
         <x-primary-button>
             {{ isset($pet) ? 'Update Appointment' : 'Save Appointment' }}
         </x-primary-button>
+
+
     </div>
 </form>

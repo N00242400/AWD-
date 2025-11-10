@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">
+        <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Edit Appointment') }}
         </h2>
@@ -11,7 +11,7 @@
                 <h2 class="text-3xl font-extrabold text-gray-900 text-center">
                     Edit Appointment
                 </h2>
-
+            {{--renders a form for editing an existing appointment--}}
                 <x-appointment-form
                     :action="route('appointments.update', $appointment)"
                     :method="'PUT'"
