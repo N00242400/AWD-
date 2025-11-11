@@ -12,7 +12,12 @@ class OwnerController extends Controller
      */
     public function index()
     {
-        //
+        //Get all owners//
+        $owners = Owner::all();
+        //return view with owner page
+        return view('owners.index',compact('owners'));
+
+
     }
 
     /**
