@@ -20,9 +20,16 @@ class Pet extends Model
         'created_at',
         'updated_at',
     ];
-
+//pet can have many appointments//
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    //pet can have many owners//
+
+    public function owners()
+    {
+        return $this->belongsToMany(Owner::class);
     }
 }
