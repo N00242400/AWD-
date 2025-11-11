@@ -4,6 +4,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\OwnerController;
 
 
 Route::get('/', function () {
@@ -39,5 +40,8 @@ Route::resource('appointments', AppointmentController::class);
 Route::post('pets/{pet}/appointments', [AppointmentController::class, 'store'])
     ->name('pets.appointments.store');
 
+//creating all routes for ownerCorntroller//
+//auth middleware checks whether the user is logged in before allowing access to the OwnerController actions//
+Route::resource('owners', OwnerController::class)->middleware('auth');
 
 require __DIR__.'/auth.php';
