@@ -21,6 +21,7 @@
                     <!-- Owners Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         @foreach($owners as $owner)
+                        <a href="{{ route('owners.show', $owner)}}">
                             <div class="relative border border-gray-200 rounded-xl shadow-sm bg-white overflow-hidden group hover:shadow-2xl transition-shadow duration-300">
                                <x-owner-card
                                :name="$owner->name"
@@ -30,6 +31,7 @@
                                />
                             </div>
                         @endforeach
+        
                     </div>
                 </div>
 
