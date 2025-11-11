@@ -36,6 +36,12 @@
                         </button>
                     </form>
 
+                <div class="flex justify-center my-4">
+                 <a href="{{ route('owners.index') }}" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                      View All Owners
+                </a>
+                </div>
+
                     <!-- Pets Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         @foreach($pets as $pet)

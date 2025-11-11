@@ -26,6 +26,7 @@
                                :name="$owner->name"
                                :image="$owner->image"
                                :email="$owner->email"
+                               :phone_number="$owner->phone_number"
                                />
                             </div>
                         @endforeach

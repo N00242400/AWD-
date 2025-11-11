@@ -1,19 +1,17 @@
 @props(['name', 'email', 'phone_number', 'image'])
 
-<div class="max-w-5xl mx-auto sm:px-6 lg:px-8 flex gap-8">
-    <!-- Image on left -->
-    <div class="flex w-96 h-96 ">
-        <img 
-            src="{{ asset('images/' . $image) }}" 
-            alt="{{ $image }}" 
-            class="w-full h-full object-cover"
-        />
-    </div>
+<div class="bg-white text-center"> 
+    <h4 class="font-extrabold text-2xl my-4">{{ $name }}</h4>
 
-    <!-- Pet info on right -->
-    <div class="flex flex-col justify-center flex-1">
-        <p class="text-gray-600 font-medium mb-1 text-lg tracking-wide">{{ $name }}</p>
-        <p class="text-gray-600 font-medium mb-3 text-lg tracking-wide">{{ $email }} </p>
+    <img 
+    
+        src="{{ asset('images/' . $image) }}" 
+        alt="{{ $name }}"
+        class="w-full h-80 object-cover mb-4 mx-auto" 
+    >
+
+    <div class="flex flex-col items-center justify-center">
+        <p class="text-gray-600 font-medium mb-3 text-lg tracking-wide">{{ $email }}</p>
         <p class="text-gray-700 text-base leading-relaxed line-clamp-5">{{ $phone_number }}</p>
     </div>
 </div>

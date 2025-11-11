@@ -1,5 +1,7 @@
 @props(['name', 'species', 'age', 'description', 'image'])
 
+
+
 <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 flex gap-8">
     <!-- Pet Image on left -->
     <div class="flex w-96 h-96 ">
