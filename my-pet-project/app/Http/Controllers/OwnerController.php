@@ -41,7 +41,10 @@ class OwnerController extends Controller
      */
     public function show(Owner $owner)
     {
-        return view('owners.show')->with('owner',$owner);
+        //load the pets relationship//
+         $owner->load('pets'); 
+         //passing the owner (with pets) to the view//
+         return view('owners.show', compact('owner'));
     }
 
     /**

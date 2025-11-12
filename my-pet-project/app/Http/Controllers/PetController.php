@@ -72,7 +72,9 @@ if ($request->hasFile('image')) {
      */
     public function show(Pet $pet)
     {
+        //fetch all appointments related to that pet and the user for each appointment//
       $pet->load('appointments.user');
+      //passes the pet variable to my view//
       return view('pets.show',compact('pet'));
 
     }
