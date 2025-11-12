@@ -17,50 +17,50 @@
                         {{ session('success') }}
                     </x-alert-success>
 
-                    <!-- Filter Form -->
-                    <form method="GET" action="{{ route('pets.index') }}" class="mb-6">
-                        <label for="species" class="mr-2 font-semibold">Filter by Species:</label>
-                        <select name="species" id="species" class="border rounded w-20 px-2 py-1">
-                            <option value="">All</option>
-                            <option value="Cat" {{ request('species') == 'Cat' ? 'selected' : '' }}>Cat</option>
-                            <option value="Dog" {{ request('species') == 'Dog' ? 'selected' : '' }}>Dog</option>
-                            <option value="Rabbit" {{ request('species') == 'Rabbit' ? 'selected' : '' }}>Rabbit</option>
-                            <option value="Lizard" {{ request('species') == 'Lizard' ? 'selected' : '' }}>Lizard</option>
-                            <option value="Bird" {{ request('species') == 'Bird' ? 'selected' : '' }}>Bird</option>
-                            <option value="Rat" {{ request('species') == 'Rat' ? 'selected' : '' }}>Rat</option>
-                        </select>
-                        <button 
-                            type="submit" 
-                            class="ml-2 w-20 px-4 py-1.5 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
-                            Go
-                        </button>
-                    </form>
+                   <!-- Filter and meet the owners-->
 
-                <div class="flex justify-center my-4">
-                 <a href="{{ route('owners.index') }}" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-                      View All Owners
-                </a>
-                </div>
+           <!-- Meet the Owners Button -->
+           <a href="{{ route('owners.index') }}" 
+              class="text-black-600 font-bold text-lg hover:text-gray-700 hover:underline transition">
+              Meet the Owners →
+           </a>
+                <div class="flex items-center justify-between mb-6">
+                        <form method="GET" action="{{ route('pets.index') }}">
+                            <label for="species" class="mr-2 font-semibold">Filter by Species:</label>
+                            <select name="species" id="species" class="border rounded w-28 px-2 py-1">
+                                <option value="">All</option>
+                                <option value="Cat" {{ request('species') == 'Cat' ? 'selected' : '' }}>Cat</option>
+                                <option value="Dog" {{ request('species') == 'Dog' ? 'selected' : '' }}>Dog</option>
+                                <option value="Rabbit" {{ request('species') == 'Rabbit' ? 'selected' : '' }}>Rabbit</option>
+                                <option value="Lizard" {{ request('species') == 'Lizard' ? 'selected' : '' }}>Lizard</option>
+                                <option value="Bird" {{ request('species') == 'Bird' ? 'selected' : '' }}>Bird</option>
+                                <option value="Rat" {{ request('species') == 'Rat' ? 'selected' : '' }}>Rat</option>
+                            </select>
+                            <button 
+                                type="submit" 
+                                class="ml-2 px-4 py-1.5 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
+                                Go
+                            </button>
+                        </form>
+
+     
+                    </div>
+
 
                     <!-- Pets Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-    @foreach($pets as $pet)
-        <a href="{{ route('pets.show', $pet) }}">
-            <x-pet-card 
-                :name="$pet->name" 
-                :species="$pet->species"
-                :age="$pet->age" 
-                :description="$pet->description"
-                :image="$pet->image"
-            />
-        </a>
-    @endforeach
-</div>
-
-             
-
-
-
+                            @foreach($pets as $pet)
+                                <a href="{{ route('pets.show', $pet) }}">
+                                    <x-pet-card 
+                                        :name="$pet->name" 
+                                        :species="$pet->species"
+                                        :age="$pet->age" 
+                                        :description="$pet->description"
+                                        :image="$pet->image"
+                                    />
+                                </a>
+                            @endforeach
+                    </div>
             </div>
         </div>
     </div>
