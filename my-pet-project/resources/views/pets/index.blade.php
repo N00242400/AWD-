@@ -44,23 +44,22 @@
 
                     <!-- Pets Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        @foreach($pets as $pet)
-                            <div class="relative border border-gray-200 rounded-xl shadow-sm bg-white overflow-hidden group hover:shadow-2xl transition-shadow duration-300">
-                                <a href="{{ route('pets.show', $pet) }}">
-                                    <x-pet-card 
-                                        :name="$pet->name" 
-                                        :breed="$pet->breed" 
-                                        :age="$pet->age" 
-                                        :image="$pet->image"
-                                    />
-                                </a>
-                                <p class="text-gray-700 text-sm mt-8 mb-8 mx-8 text-center">
-                                    {{ Str::limit($pet->description, 50, '...') }}
-                                </p>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+    @foreach($pets as $pet)
+        <a href="{{ route('pets.show', $pet) }}">
+            <x-pet-card 
+                :name="$pet->name" 
+                :species="$pet->species"
+                :age="$pet->age" 
+                :description="$pet->description"
+                :image="$pet->image"
+            />
+        </a>
+    @endforeach
+</div>
+
+             
+
+
 
             </div>
         </div>

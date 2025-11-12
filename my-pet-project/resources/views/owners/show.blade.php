@@ -4,55 +4,47 @@
         {{ session('success') }}
     </x-alert-success>
 
-    <div class="py-12 bg-white">
-        <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white">
-            <!-- owners-->
-                <div class="flex flex-col items-center justify-center">
-                    <h2 class="text-3xl font-extrabold text-gray-900 text-center">
-                     {{ $owner->name }}
-                    </h2>
-
-                    <div class="mt-4">
-                        <x-owner-details
-                               :name="$owner->name"
-                               :image="$owner->image"
-                               :email="$owner->email"
-                               :phone_number="$owner->phone_number"
-                        />
-                        </div>
-
-                        <!-- Pets Section -->
-                    <div class="mt-8 w-full max-w-6xl">
-                        <h3 class="text-2xl font-semibold mb-4 text-center">Meet {{ $owner->name }}'s Pets</h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                @foreach($owner->pets as $pet)
-                                    <div class="border rounded-lg shadow p-4">
-                                        <a href="{{ route('pets.show', $pet) }}">
-                                            <x-pet-card 
-                                                :name="$pet->name" 
-                                                :breed="$pet->breed" 
-                                                :age="$pet->age" 
-                                                :image="$pet->image"
-                                            />
-                                        </a>
-                                        <p class="text-gray-700 mt-2 text-center">
-                                            {{ Str::limit($pet->description, 50, '...') }}
-                                        </p>
-                                    </div>
-                                @endforeach
-                            </div>
-                    </div>
+    <div class="flex flex-col md:flex-row max-w-7xl mx-auto gap-8 py-12">
         
-    <!-- Back Button -->
-     <a href="{{ route('owners.index') }}" 
-         class="py-2.5 px-5 text-sm font-medium text-white bg-gray-500 rounded-full border border-gray-200  hover:bg-gray-600 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
-            Back to Menu
-     </a>
+        <!-- Owner Section -->
+        <div class="w-full md:w-1/3 bg-white rounded-xl p-6 flex flex-col items-center">
+            <img 
+                src="{{ asset('images/' . $owner->image) }}" 
+                alt="{{ $owner->name }}" 
+                class="w-64 h-64 rounded-full object-cover shadow-lg mb-6"
+            >
+
+            <h2 class="text-2xl font-bold text-gray-900 mb-2 text-center">{{ $owner->name }}</h2>
+            <p class="text-gray-600 font-medium mb-1">{{ $owner->phone_number }}</p>
+            <p class="text-gray-700 text-base text-center">{{ $owner->email }}</p>
+
+            <a href="{{ route('owners.index') }}" 
+               class="mt-6 px-6 py-2 bg-gray-500 text-white rounded-full hover:bg-gray-600 transition">
+                Back to All Owners
+            </a>
+        </div>
+
+       <!-- Pets Section -->
+<div class="w-full mx-auto -mt-4">
+    <h3 class="text-3xl font-semibold mb-12 text-center">
+       {{ $owner->name }}'s Pets
+    </h3>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+        @foreach($owner->pets as $pet)
+            <a href="{{ route('pets.show', $pet) }}">
+                <x-pet-card 
+                    :name="$pet->name" 
+                    :species="$pet->species" 
+                    :age="$pet->age" 
+                    :description="$pet->description" 
+                    :image="$pet->image"
+                />
+            </a>
+        @endforeach
+    </div>
 </div>
- </div>
- </div>
- </div>
- </x-app-layout>
 
 
+    </div>
+</x-app-layout>
