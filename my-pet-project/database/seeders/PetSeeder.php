@@ -62,7 +62,7 @@ class PetSeeder extends Seeder
         ];
 
         //insert pet into pet table//
-        foreach ($pets as $petData)
+        foreach ($pets as $petData) {
             $pet = Pet::create(array_merge($petData, ['created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp]));
 
         //randomly select two owners//
@@ -75,4 +75,5 @@ class PetSeeder extends Seeder
 
 
     }
+}
 }
