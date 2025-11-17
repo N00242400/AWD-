@@ -10,18 +10,32 @@
 
                 <!-- Navigation Links -->
                 <div class="justify-centre px-4 gap-4  sm:flex">
+                    <!-- Link to dashboard -->
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                     <!-- Link to my view all pets -->
                      <x-nav-link :href="route('pets.index')" :active="request()->routeIs('pets.index')">
-                        {{ __('View All Pets') }}
+                        {{ __('Meet the Pets') }}
                         </x-nav-link>
-
+                    <!-- Link to my view all the ownerss -->
+                         <x-nav-link :href="route('owners.index')" :active="request()->routeIs('owners.index')">
+                        {{ __('Meet the Owners') }}
+                        </x-nav-link>
+                        
+                    <!-- If you are an admin then you can see pets create page -->
                   @if(auth()->user()->role === 'admin')
                     <x-nav-link :href="route('pets.create')" :active="request()->routeIs('pets.create')">
-                    {{ __('Create New Pet') }}
+                    {{ __('Add a new Pet') }}
                     </x-nav-link>
+
+                      <x-nav-link :href="route('owners.create')" :active="request()->routeIs('owners.create')">
+                    {{ __('Add an Owner') }}
+                    </x-nav-link>
+
                   @endif
+
+
                 </div>
             </div>
          
