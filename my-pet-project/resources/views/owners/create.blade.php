@@ -15,6 +15,8 @@
                 <x-owner-form
                 :action="route('owners.store')"
                 :method="'POST'"
+                {{--  passes all pets from controller to the component so the form can display the pets --}}
+                 :pets="$pets"
                 />
                 </div>
             </div>

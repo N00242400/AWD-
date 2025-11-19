@@ -1,4 +1,5 @@
-@props(['action', 'method','owner'])
+@props(['action', 'method', 'owner' => null, 'pets' => []])
+
 
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -77,6 +78,16 @@
             <p class="text-sm text-red-600" id="phone-error">{{ $message }}</p>
         @enderror
     </div>
+
+    @foreach($pets as $pet)
+    <label>
+        <input type="checkbox" name="pets[]" value="{{ $pet->id }}"
+            @if(isset($owner) && $owner->pets->contains($pet->id)) checked @endif
+        >
+        {{ $pet->name }} ({{ $pet->species }})
+    </label>
+@endforeach
+
 
     {{-- Submit Button --}}
     <x-primary-button>

@@ -44,6 +44,7 @@ public function store(Request $request)
         'email' => 'required|email|max:55|unique:owners,email',
         'phone_number' => 'required|string|max:15',
         'image' => 'required|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
+        'pets' => 'array' // Validate pets as an array//
     ]);
 
     // Handle image upload
@@ -56,6 +57,10 @@ public function store(Request $request)
         'phone_number' => $request->phone_number,
         'image' => $imagePath,
     ]);
+       // Attach selected pets (many-to-many)
+       if ($request->pets) {
+        $owner->pets()->attach($request->pets);
+    }
 
     return redirect()
         ->route('owners.show', $owner)
@@ -82,6 +87,7 @@ public function store(Request $request)
         if(auth()->id() !== $owner->user_id && auth()->user()->role !== 'admin') {
             return redirect()->route('owners.show')->with('error', 'Access denied.');
         }
+        $pets = Pet::all(); // get all pets
         //passing the pet and review object to the views//
         return view('owners.edit',compact('owner'));
         
@@ -93,14 +99,43 @@ public function store(Request $request)
      */
     public function update(Request $request, Owner $owner)
     {
-        //
-    }
+           // Validate input
+    $owner = $request->validate([
+        'name' => 'required|string|max:25',
+        'email' => 'required|email|max:55|unique:owners,email',
+        'phone_number' => 'required|string|max:15',
+        'image' => 'required|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
+        'pets' => 'array' // Validate pets as an array//
+    ]);
+
+    $owner->update($validated);
+
+   // Update owner fields
+   $owner->update([
+    'name' => $request->name,
+    'email' => $request->email,
+    'phone_number' => $request->phone_number,
+    'image' => $owner->image, // either old or new image
+]);
+
+// Sync pets (many-to-many)
+$owner->pets()->sync($request->pets ?? []);
+
+// Redirect back to owner show page with success
+return redirect()->route('owners.show', $owner)
+                 ->with('success', 'Owner updated successfully!');
+}
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Owner $owner)
     {
-        //
+        $owner->pets()->detach(); // Detach all associated pets
+        $owner->delete();
+
+        return redirect()
+            ->route('owners.index')
+            ->with('success', 'Owner deleted successfully!');   
     }
 }
