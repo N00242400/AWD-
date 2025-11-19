@@ -83,49 +83,60 @@ public function store(Request $request)
      */
     public function edit(Owner $owner)
     {
-          //checks if user is the owner or an admin//
+        // Authorization check
         if(auth()->id() !== $owner->user_id && auth()->user()->role !== 'admin') {
-            return redirect()->route('owners.show')->with('error', 'Access denied.');
+            return redirect()->route('owners.show', $owner)->with('error', 'Access denied.');
         }
-        $pets = Pet::all(); // get all pets
-        //passing the pet and review object to the views//
-        return view('owners.edit',compact('owner'));
-        
-
+    
+        // Get all pets to display in the form
+        $pets = Pet::all();
+    
+        // Pass both owner and pets to the view
+        return view('owners.edit', compact('owner', 'pets'));
     }
+    
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Owner $owner)
     {
-           // Validate input
-    $owner = $request->validate([
-        'name' => 'required|string|max:25',
-        'email' => 'required|email|max:55|unique:owners,email',
-        'phone_number' => 'required|string|max:15',
-        'image' => 'required|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
-        'pets' => 'array' // Validate pets as an array//
-    ]);
-
-    $owner->update($validated);
-
-   // Update owner fields
-   $owner->update([
-    'name' => $request->name,
-    'email' => $request->email,
-    'phone_number' => $request->phone_number,
-    'image' => $owner->image, // either old or new image
-]);
-
-// Sync pets (many-to-many)
-$owner->pets()->sync($request->pets ?? []);
-
-// Redirect back to owner show page with success
-return redirect()->route('owners.show', $owner)
-                 ->with('success', 'Owner updated successfully!');
-}
-
+        // Authorization check
+        if(auth()->id() !== $owner->user_id && auth()->user()->role !== 'admin') {
+            return redirect()->route('owners.show', $owner)->with('error', 'Access denied.');
+        }
+    
+        // Validate input
+        $request->validate([
+            'name' => 'required|string|max:25',
+           // ignores the owner’s own email during validation//
+            'email' => 'required|email|max:55|unique:owners,email,' . $owner->id,
+            'phone_number' => 'required|string|max:15',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
+        ]);
+    
+        // Handle image upload if provided
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($owner->image && file_exists(storage_path('app/public/' . $owner->image))) {
+                unlink(storage_path('app/public/' . $owner->image));
+            }
+            $imagePath = $request->file('image')->store('owners', 'public');
+            $owner->image = $imagePath;
+        }
+    
+        $owner->name = $request->name;
+        $owner->email = $request->email;
+        $owner->phone_number = $request->phone_number;
+        $owner->save();
+    
+        // Sync the pets relationship if checkboxes were used
+        $owner->pets()->sync($request->input('pets', []));
+    
+        return redirect()->route('owners.show', $owner)
+                         ->with('success', 'Owner updated successfully!');
+    }
+    
     /**
      * Remove the specified resource from storage.
      */
