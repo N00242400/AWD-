@@ -77,6 +77,11 @@ if ($request->hasFile('image')) {
       //passes the pet variable to my view//
       return view('pets.show',compact('pet'));
 
+
+ //fetch all owners related to that pet //
+      $pet->load('owners');
+      return view('pets.show', compact('pet'));
+
     }
 
     /**

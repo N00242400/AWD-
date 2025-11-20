@@ -25,6 +25,32 @@
                     </div>
                 </div>
 
+     <div class="mt-12">
+         <h3 class="text-2xl font-semibold mb-6 text-center">
+             {{ $pet->name }} Owners
+          </h3>
+
+                @if($pet->owners->isEmpty())
+                    <p class="text-gray-600 text-center">This pet has no owners assigned.</p>
+                @else
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        @foreach($pet->owners as $owner)
+                            <a href="{{ route('owners.show', $owner)}}">
+                                <div class="relative border border-gray-200 rounded-xl shadow-sm bg-white overflow-hidden group hover:shadow-2xl transition-shadow duration-300">
+                                    <x-owner-card
+                                        :name="$owner->name"
+                                        :image="$owner->image"
+                                        :email="$owner->email"
+                                        :phone_number="$owner->phone_number"
+                                    />
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+
+
                 <!-- Appointment info -->
                 <h4 class="font-semibold text-md mt-8">Appointments</h4>
 
