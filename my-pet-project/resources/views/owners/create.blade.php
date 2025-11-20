@@ -9,9 +9,9 @@
         <div class="max-w-7x1 mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h3 class="font-semibold text-lg mb-4">Add a New Pet:</h3>
+                    <h3 class="font-semibold text-lg mb-4">Add a New Owner:</h3>
 
-                {{-- Using the ownerformto create a new owner--}}
+                {{-- Using the owners form to create a new owner--}}
                 <x-owner-form
                 :action="route('owners.store')"
                 :method="'POST'"

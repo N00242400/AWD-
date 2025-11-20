@@ -79,14 +79,21 @@
         @enderror
     </div>
 
+    {{-- Pets checkbox--}}
+<div class="mb-4">
+    <label class="block text-sm text-gray-700 mb-1">Pets</label>
+
     @foreach($pets as $pet)
-    <label>
-        <input type="checkbox" name="pets[]" value="{{ $pet->id }}"
-            @if(isset($owner) && $owner->pets->contains($pet->id)) checked @endif
-        >
-        {{ $pet->name }} ({{ $pet->species }})
-    </label>
-@endforeach
+        <label class="flex items-center gap-2 mb-1">
+            <input
+                type="checkbox"
+                name="pets[]"
+                value="{{ $pet->id }}"
+            >
+            <div>{{ $pet->name }} ({{ $pet->species }})</div>
+        </label>
+    @endforeach
+</div>
 
 
     {{-- Submit Button --}}

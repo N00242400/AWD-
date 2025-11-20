@@ -49,6 +49,7 @@ public function store(Request $request)
 
     // Handle image upload
     $imagePath = $request->file('image')->store('owners', 'public');
+   
 
     // Create the owner
     $owner = Owner::create([

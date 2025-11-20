@@ -9,7 +9,7 @@
         <!-- Owner Section -->
         <div class="w-full md:w-1/3 bg-white rounded-xl p-6 flex flex-col items-center">
             <img 
-                src="{{ asset('images/' . $owner->image) }}" 
+            src="{{ asset('storage/' . $owner->image) }}"
                 alt="{{ $owner->name }}" 
                 class="w-64 h-64 rounded-full object-cover shadow-lg mb-6"
             >
