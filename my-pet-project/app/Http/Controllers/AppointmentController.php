@@ -30,6 +30,11 @@ class AppointmentController extends Controller
 
      public function store(Request $request, Pet $pet)
 {
+
+      // Vet only
+      if (auth()->user()->role !== 'vet') {
+        return redirect()->back()->with('error', 'Only vets can create appointments.');
+    }
     // Validate input
     $request->validate([
         'appointment_type' => 'nullable|in:checkup,vaccination,surgery,grooming',
@@ -69,24 +74,24 @@ class AppointmentController extends Controller
      */
     public function edit(Appointment $appointment)
     {
-        //checks if user is the owner or an admin//
-        if(auth()->user() !== $appointment->user_id && auth()->user()->role !== 'admin') {
-            return redirect()->route('pets.show')->with('error', 'Access denied.');
+        // Must be a vet
+        if (auth()->user()->role !== 'vet') {
+            return redirect()->back()->with('error', 'Only vets can edit appointments.');
         }
-        //passing the pet and review object to the views//
-        return view('appointments.edit',compact('appointment'));
+    
+        return view('appointments.edit', compact('appointment'));
     }
-
+    
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Appointment $appointment)
     {
-          // Check if user is the owner or an admin
-    if(auth()->id() !== $appointment->user_id && auth()->user()->role !== 'admin') {
-        return redirect()->route('pets.show', $appointment->pet_id)
-                         ->with('error', 'Access denied.');
-    }
+   // Must be a vet
+   if (auth()->user()->role !== 'vet') {
+    return redirect()->route('pets.show', $appointment->pet_id)
+                     ->with('error', 'Only vets can update appointments.');
+}
 
        // Validate input
     $request->validate([
@@ -106,12 +111,18 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
- public function destroy(Appointment $appointment)
-{
-
-    $appointment->delete();
-       return redirect()->route('pets.show',$appointment->pet_id)
-                ->with('success','Appointment updated succesfully.');
-}
+    public function destroy(Appointment $appointment)
+    {
+       // Must be vet
+       if (auth()->user()->role !== 'vet') {
+        return redirect()->back()->with('error', 'Only vets can delete appointments.');
+    }
+    //removes from database//
+        $appointment->delete();
+    //$appointment->pet_id = which pet does this appointment belong to?//
+        return redirect() ->route('pets.show', $appointment->pet_id)
+            ->with('success', 'Appointment deleted successfully.');
+    }
+    
 
 }
