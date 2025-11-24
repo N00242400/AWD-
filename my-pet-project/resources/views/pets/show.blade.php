@@ -73,8 +73,8 @@
                                     <p>Notes: {{ $appointment->vet_notes }}</p>
                                 @endif
 
-                                <!-- Admin or owner can edit/delete -->
-                                @if ($appointment->user->is(auth()->user()) || auth()->user()->role === 'admin')
+                       <!-- Vet or owner can edit/delete -->
+                       @if ($appointment->user->is(auth()->user()) || auth()->user()->role === 'admin' || auth()->user()->role === 'vet')         
                                     <a href="{{ route('appointments.edit', $appointment) }}" class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
                                         hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
                                         {{ __('Edit Appointment') }}
@@ -94,7 +94,7 @@
                     </ul>
                 @endif
 
-                @if(auth()->user()->role === 'admin')
+                @if(auth()->user()->role === 'admin'|| auth()->user()->role === 'vet')    
                     <!-- Adding Appointment -->
                     <h4 class="font-semibold text-md mt-8">Add an appointment</h4>
                     <form action="{{ route('pets.appointments.store', $pet) }}" method="POST" class="mt-4">
@@ -129,7 +129,7 @@
                 @endif
 
                 <div class="mt-8 flex justify-center gap-4">
-                    @if(auth()->user()->role === 'admin')
+                    @if(auth()->user()->role === 'admin' || auth()->user()->role === 'vet')    
                         <!-- Edit Button -->
                         <a href="{{ route('pets.edit', $pet) }}"
                            class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
