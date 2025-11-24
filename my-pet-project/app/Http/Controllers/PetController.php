@@ -24,7 +24,7 @@ class PetController extends Controller
   
     public function create()
     {
-        if(auth()->user()->role !== 'admin'){
+        if(auth()->user()->role !== 'admin,vet'){
 
             return redirect()->route('pets.index')->with('error','Access denied.');
         }

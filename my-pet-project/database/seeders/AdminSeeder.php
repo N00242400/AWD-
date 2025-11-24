@@ -19,5 +19,12 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('password'), //password is hashed for security
             'role'=>'admin',
         ]);
+
+        User::create([
+            'name' => 'Vet',
+            'email' => 'vet1' . time() . '@example.com', //faking a unique email//
+            'password' => Hash::make('password'), //password is hashed for security
+            'role'=>'vet',
+        ]);
     }
 }

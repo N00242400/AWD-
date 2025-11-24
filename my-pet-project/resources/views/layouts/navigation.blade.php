@@ -24,7 +24,7 @@
                         </x-nav-link>
                         
                     <!-- If you are an admin then you can see pets create page -->
-                  @if(auth()->user()->role === 'admin')
+                  @if(auth()->user()->role === 'admin,vet')
                     <x-nav-link :href="route('pets.create')" :active="request()->routeIs('pets.create')">
                     {{ __('Add a new Pet') }}
                     </x-nav-link>
