@@ -11,10 +11,18 @@ class AppointmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, Pet $pet)
     {
-        //
+        if (auth()->user()->role !== 'admin' && auth()->user()->role !== 'vet') {
+            return redirect()->back()->with('error', 'Access denied.');
+        }
+    
+        $appointments = $pet->appointments()->get();
+    
+        return view('appointments.index', compact('appointments', 'pet'));
     }
+    
+    
 
     /**
      * Show the form for creating a new resource.
@@ -66,7 +74,13 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        //
+    // Only admin or vet can view appointment details
+    if (auth()->user()->role !== 'admin' && auth()->user()->role !== 'vet') {
+        return redirect()->back()->with('error', 'Access denied.');
+    }
+
+    return view('appointments.show', compact('appointment'));
+
     }
 
     /**
