@@ -19,11 +19,7 @@
 
                    <!-- Filter and meet the owners-->
 
-           <!-- Meet the Owners Button -->
-           <a href="{{ route('owners.index') }}" 
-              class="text-black-600 font-bold text-lg hover:text-gray-700 hover:underline transition">
-              Meet the Owners →
-           </a>
+         
                 <div class="flex items-center justify-between mb-6">
                         <form method="GET" action="{{ route('pets.index') }}">
                             <label for="species" class="mr-2 font-semibold">Filter by Species:</label>
@@ -42,6 +38,11 @@
                                 Go
                             </button>
                         </form>
+
+                        <a href="{{ route('owners.index') }}" 
+              class="text-black-600 font-bold text-lg hover:text-gray-700 hover:underline transition">
+              Meet the Owners →
+           </a>
 
      
                     </div>

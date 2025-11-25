@@ -8,8 +8,9 @@
         
         <!-- Owner Section -->
         <div class="w-full md:w-1/3 bg-white rounded-xl p-6 flex flex-col items-center">
+
             <img 
-            src="{{ asset('images/' . $owner->image) }}"
+                src="{{ asset('images/' . $owner->image) }}"
                 alt="{{ $owner->name }}" 
                 class="w-64 h-64 rounded-full object-cover shadow-lg mb-6"
             >
@@ -18,53 +19,60 @@
             <p class="text-gray-600 font-medium mb-1">{{ $owner->phone_number }}</p>
             <p class="text-gray-700 text-base text-center">{{ $owner->email }}</p>
 
-            <a href="{{ route('owners.index') }}" 
+
+            <!-- Edit/Delete Buttons -->
+            <div class="mt-8 flex justify-center gap-4">
+
+                @if(auth()->id() === $owner->user_id || auth()->user()->role === 'admin' || auth()->user()->role === 'vet')
+                    <!-- Edit Button -->
+                    <a href="{{ route('owners.edit', $owner) }}"
+                    class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
+                            hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
+                        Edit
+                    </a>
+
+                    <!-- Delete Button -->
+                    <form action="{{ route('owners.destroy', $owner) }}" method="POST"
+                        onsubmit="return confirm('Are you sure you want to delete this owner?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                                class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
+                                       hover:bg-gray-100 hover:text-red-500 focus:z-10 focus:ring-4 focus:ring-gray-100 transition">
+                            Delete
+                        </button>
+                    </form>
+                @endif
+
+            </div> 
+              <!-- Back Button -->
+              <a href="{{ route('owners.index') }}" 
                class="mt-6 px-6 py-2 bg-gray-500 text-white rounded-full hover:bg-gray-600 transition">
                 Back to All Owners
             </a>
 
-            <!-- Only show edit button if user is owner or admin -->
-            @if(auth()->id() === $owner->user_id || auth()->user()->role === 'admin' || auth()->user()->role === 'vet')
-               <a href="{{ route('owners.edit', $owner) }}"
-                 class="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                 Edit Owner
-              </a>
-            @endif
-
-
-
-            <form action="{{ route('owners.destroy', $owner) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this owner?');">
-                @csrf
-                @method('DELETE')
-             <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
-                Delete Owner
-             </button>
-            </form>
-
-
         </div>
 
-       <!-- Pets Section -->
-<div class="w-full mx-auto -mt-4">
-    <h3 class="text-3xl font-semibold mb-12 text-center">
-       {{ $owner->name }}'s Pets
-    </h3>
+        <!-- Pets Section -->
+        <div class="w-full mx-auto -mt-4">
+            <h3 class="text-3xl font-semibold mb-12 text-center">
+                {{ $owner->name }}'s Pets
+            </h3>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-        @foreach($owner->pets as $pet)
-            <a href="{{ route('pets.show', $pet) }}">
-                <x-pet-card 
-                    :name="$pet->name" 
-                    :species="$pet->species" 
-                    :age="$pet->age" 
-                    :description="$pet->description" 
-                    :image="$pet->image"
-                />
-            </a>
-        @endforeach
-    </div>
-</div>
-
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+                @foreach($owner->pets as $pet)
+                    <a href="{{ route('pets.show', $pet) }}">
+                        <x-pet-card 
+                            :name="$pet->name" 
+                            :species="$pet->species" 
+                            :age="$pet->age" 
+                            :description="$pet->description" 
+                            :image="$pet->image"
+                        />
+                    </a>
+                @endforeach
+            </div>
+        </div>
 
     </div>
 </x-app-layout>
