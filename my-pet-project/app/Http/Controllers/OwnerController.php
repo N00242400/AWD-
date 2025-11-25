@@ -25,9 +25,10 @@ class OwnerController extends Controller
      */
     public function create()
     {
-        if (auth()->user()->role !== 'admin'){
-            return redirect()->route('owners.index')->with('error','Access denied.');
+        if (auth()->user()->role !== 'admin' && auth()->user()->role !== 'vet') {
+            return redirect()->route('owners.index')->with('error', 'Access denied.');
         }
+        
         //loads the create view//
         $pets = Pet ::all();
         return view('owners.create', compact ('pets'));
@@ -47,8 +48,11 @@ public function store(Request $request)
         'pets' => 'array' // Validate pets as an array//
     ]);
 
-    // Handle image upload
-    $imagePath = $request->file('image')->store('owners', 'public');
+  // Handle image upload
+  if ($request->hasFile('image')) {
+    $imageName = time() . '.' . $request->image->extension();
+    $request->image->move(public_path('images'), $imageName);
+}
    
 
     // Create the owner
@@ -56,7 +60,7 @@ public function store(Request $request)
         'name' => $request->name,
         'email' => $request->email,
         'phone_number' => $request->phone_number,
-        'image' => $imagePath,
+        'image' => $imageName,
     ]);
        // Attach selected pets (many-to-many)
        if ($request->pets) {
@@ -85,8 +89,8 @@ public function store(Request $request)
     public function edit(Owner $owner)
     {
         // Authorization check
-        if(auth()->id() !== $owner->user_id && auth()->user()->role !== 'admin') {
-            return redirect()->route('owners.show', $owner)->with('error', 'Access denied.');
+        if (auth()->user()->role !== 'admin' && auth()->user()->role !== 'vet') {
+            return redirect()->route('owners.index')->with('error', 'Access denied.');
         }
     
         // Get all pets to display in the form
@@ -103,8 +107,8 @@ public function store(Request $request)
     public function update(Request $request, Owner $owner)
     {
         // Authorization check
-        if(auth()->id() !== $owner->user_id && auth()->user()->role !== 'admin') {
-            return redirect()->route('owners.show', $owner)->with('error', 'Access denied.');
+        if (auth()->user()->role !== 'admin' && auth()->user()->role !== 'vet') {
+            return redirect()->route('owners.index')->with('error', 'Access denied.');
         }
     
         // Validate input
@@ -116,15 +120,17 @@ public function store(Request $request)
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
         ]);
     
-        // Handle image upload if provided
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($owner->image && file_exists(storage_path('app/public/' . $owner->image))) {
-                unlink(storage_path('app/public/' . $owner->image));
-            }
-            $imagePath = $request->file('image')->store('owners', 'public');
-            $owner->image = $imagePath;
+       // Handle image upload if new image provided
+       if ($request->hasFile('image')) {
+        // Delete old image if it exists
+        if ($pet->image && file_exists(public_path('images/' . $pet->image))) {
+            unlink(public_path('images/' . $pet->image));
         }
+        // Save new image
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        $pet->image = $imageName;
+    }
     
         $owner->name = $request->name;
         $owner->email = $request->email;
@@ -143,6 +149,10 @@ public function store(Request $request)
      */
     public function destroy(Owner $owner)
     {
+        if (auth()->user()->role !== 'admin' && auth()->user()->role !== 'vet') {
+            return redirect()->route('owners.index')->with('error', 'Access denied.');
+        }
+        // Delete owner image if exists
         $owner->pets()->detach(); // Detach all associated pets
         $owner->delete();
 

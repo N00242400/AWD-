@@ -21,7 +21,7 @@
             </a>
 
             <!-- Add A Pet -->
-              @if(auth()->user()->role === 'admin')
+              @if(auth()->user()->role === 'admin' || auth()->user()->role === 'vet')
             
             <a href="{{ route('pets.create') }}" class="flex flex-col items-center">
 

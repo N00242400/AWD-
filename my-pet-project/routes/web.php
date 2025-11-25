@@ -45,7 +45,7 @@ Route::post('/pets/{pet}/appointments', [AppointmentController::class, 'store'])
 Route::resource('appointments', AppointmentController::class);
 
 
-//creating all routes for ownerCorntroller//
+//creating all routes for ownerController//
 //auth middleware checks whether the user is logged in before allowing access to the OwnerController actions//
 Route::resource('owners', OwnerController::class)->middleware('auth');
 

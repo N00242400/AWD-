@@ -47,7 +47,7 @@
          {{-- If editing an existing owner and they already have an image, show a preview --}}
         @if(isset($owner) && $owner->image)
             <div class="mb-2">
-                <img src="{{ asset('storage/' . $owner->image) }}" alt="{{ $owner->name }}" class="w-24 h-24 object-cover rounded-full">
+            <img src="{{ asset('images/' . $owner->image) }}" alt="{{ $owner->name }}" class="w-24 h-24 object-cover rounded-full">
             </div>
         @endif
             {{-- File input for uploading a new profile picture --}}

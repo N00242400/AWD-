@@ -9,7 +9,7 @@
         <!-- Owner Section -->
         <div class="w-full md:w-1/3 bg-white rounded-xl p-6 flex flex-col items-center">
             <img 
-            src="{{ asset('storage/' . $owner->image) }}"
+            src="{{ asset('images/' . $owner->image) }}"
                 alt="{{ $owner->name }}" 
                 class="w-64 h-64 rounded-full object-cover shadow-lg mb-6"
             >
@@ -24,7 +24,7 @@
             </a>
 
             <!-- Only show edit button if user is owner or admin -->
-            @if(auth()->id() === $owner->user_id || auth()->user()->role === 'admin')
+            @if(auth()->id() === $owner->user_id || auth()->user()->role === 'admin' || auth()->user()->role === 'vet')
                <a href="{{ route('owners.edit', $owner) }}"
                  class="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                  Edit Owner
