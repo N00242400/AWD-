@@ -19,6 +19,21 @@
 
                    <!-- Filter and meet the owners-->
 
+                   <form method="GET" action="{{ route('pets.index') }}" class="mb-4 flex">
+    <input 
+        type="text" 
+        name="search"
+        placeholder="Search pets by name or age... 
+        value="{{ request('search') }}"
+        class="border rounded px-3 py-2 w-64"
+    >
+    <button 
+        type="submit" 
+        class="ml-2 px-4 py-1.5 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
+        Search
+    </button>
+</form>
+
          
                 <div class="flex items-center justify-between mb-6">
                         <form method="GET" action="{{ route('pets.index') }}">

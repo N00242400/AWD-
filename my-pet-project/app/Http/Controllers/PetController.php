@@ -11,10 +11,28 @@ class PetController extends Controller
 {
     public function index(Request $request)
     {
-        $pets = Pet::when($request->filled('species'), function ($query) use ($request) {
-            $query->where('species', $request->species);
-        })->get();
-
+        // If a search term is present → use Scout full-text search
+        if ($request->filled('search')) {
+            $pets = Pet::search($request->search)->get();
+        } else {
+            // Otherwise load normally
+            $pets = Pet::query()->get();
+        }
+    
+        // Apply species filter after search
+        if ($request->filled('species')) {
+    
+            // If $pets is a Collection (after Scout search), filter manually
+            if ($pets instanceof \Illuminate\Support\Collection) {
+                $pets = $pets->filter(function ($pet) use ($request) {
+                    return $pet->species === $request->species;
+                });
+            } else {
+                // If it's a query builder (no search), apply DB filter
+                $pets = $pets->where('species', $request->species)->get();
+            }
+        }
+    
         return view('pets.index', compact('pets'));
     }
 
