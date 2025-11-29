@@ -27,10 +27,17 @@ class AppointmentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
+    public function create(Pet $pet)
+{
+    // Vet only
+    if (auth()->user()->role !== 'vet') {
+        return redirect()->back()->with('error', 'Only vets can create appointments.');
     }
+
+    return view('appointments.create', compact('pet'));
+}
+
+    
 
     /**
      * Store a newly created resource in storage.

@@ -36,14 +36,26 @@ Route::middleware('auth')->group(function () {
 // Appointments for a specific pet 
 //When someone visits /pets/1/appointments, show the pet’s appointments.”
 Route::get('/pets/{pet}/appointments', [AppointmentController::class, 'index'])
-    ->name('pets.appointments.index');
+->name('pets.appointments.index');
+
+Route::get('/pets/{pet}/appointments/create', [AppointmentController::class, 'create'])
+->name('pets.appointments.create');
 
 Route::post('/pets/{pet}/appointments', [AppointmentController::class, 'store'])
-    ->name('pets.appointments.store');
+->name('pets.appointments.store');
 
-// Global appointments routes 
-Route::resource('appointments', AppointmentController::class);
+// APPOINTMENTS — SINGLE APPOINTMENT ROUTES
+Route::get('/appointments/{appointment}', [AppointmentController::class, 'show'])
+->name('appointments.show');
 
+Route::get('/appointments/{appointment}/edit', [AppointmentController::class, 'edit'])
+->name('appointments.edit');
+
+Route::put('/appointments/{appointment}', [AppointmentController::class, 'update'])
+->name('appointments.update');
+
+Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])
+->name('appointments.destroy');
 
 //creating all routes for ownerController//
 //auth middleware checks whether the user is logged in before allowing access to the OwnerController actions//

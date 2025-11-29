@@ -1,28 +1,37 @@
-@props(['action', 'method','pet','appointment'])
+@props(['action', 'method' => 'POST', 'pet', 'appointment' => null])
 
-<form action="{{ $action }}" method="POST" enctype="multipart/form-data">
+<form action="{{ $action }}" method="POST" class="w-full max-w-lg">
     @csrf
 
     @if($method === 'PUT' || $method === 'PATCH')
         @method($method)
     @endif
-{{--Appointment type --}}
+
+    {{-- Appointment Type --}}
     <div class="mb-4">
-        <label for="appointment_type" class="block text-sm text-gray-700">Appointment Type</label>
-        <input
-            type="text"
-            name="appointment_type"
-            id="appointment_type"
-            value="{{ old('appointment_type', $appointment->appointment_type ?? '') }}"
-            required
-            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-        />
+        <label for="appointment_type" class="block text-sm text-gray-700">Appointment Type (optional)</label>
+
+        <select name="appointment_type"
+                id="appointment_type"
+                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+
+            <option value="">-- Select --</option>
+
+            @foreach(['checkup', 'vaccination', 'surgery', 'grooming'] as $type)
+                <option value="{{ $type }}"
+                    {{ old('appointment_type', $appointment->appointment_type ?? '') === $type ? 'selected' : '' }}>
+                    {{ ucfirst($type) }}
+                </option>
+            @endforeach
+
+        </select>
+
         @error('appointment_type')
             <p class="text-sm text-red-600">{{ $message }}</p>
         @enderror
     </div>
 
-    {{--Vet name --}}
+    {{-- Vet Name --}}
     <div class="mb-4">
         <label for="vet_name" class="block text-sm text-gray-700">Vet Name</label>
         <input
@@ -38,7 +47,7 @@
         @enderror
     </div>
 
-        {{--Clinic Name--}}
+    {{-- Clinic Name --}}
     <div class="mb-4">
         <label for="clinic_name" class="block text-sm text-gray-700">Clinic Name</label>
         <input
@@ -54,7 +63,7 @@
         @enderror
     </div>
 
-       {{--Appointment date--}}
+    {{-- Appointment Date --}}
     <div class="mb-4">
         <label for="appointment_date" class="block text-sm text-gray-700">Appointment Date</label>
         <input
@@ -70,26 +79,25 @@
         @enderror
     </div>
 
-       {{--Vet Notes--}}
+    {{-- Vet Notes --}}
     <div class="mb-4">
-        <label for="vet_notes" class="block text-sm text-gray-700">Vet Notes</label>
-        <input
-            type="text"
+        <label for="vet_notes" class="block text-sm text-gray-700">Vet Notes (optional)</label>
+        <textarea
             name="vet_notes"
             id="vet_notes"
-            value="{{ old('vet_notes', $appointment->vet_notes ?? '') }}"
-            required
             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-        />
+            maxlength="500"
+            rows="3"
+        >{{ old('vet_notes', $appointment->vet_notes ?? '') }}</textarea>
+
         @error('vet_notes')
             <p class="text-sm text-red-600">{{ $message }}</p>
         @enderror
     </div>
 
-        <x-primary-button>
-            {{ isset($pet) ? 'Update Appointment' : 'Save Appointment' }}
-        </x-primary-button>
+    {{-- Submit Button --}}
+    <x-primary-button>
+        {{ $appointment ? 'Update Appointment' : 'Create Appointment' }}
+    </x-primary-button>
 
-
-    </div>
 </form>

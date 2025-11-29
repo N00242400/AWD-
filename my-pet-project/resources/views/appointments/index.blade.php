@@ -31,12 +31,28 @@
             </ul>
         @endif
 
-        <div class="mt-6">
-            <a href="{{ route('pets.show', $pet) }}" 
-               class="py-2.5 px-5 text-sm font-medium text-white bg-gray-500 rounded-full hover:bg-gray-600 transition">
-                Back to Pet
-            </a>
-        </div>
+        <div class="mt-6 flex items-center gap-4">
+
+        <div class="mt-6 flex items-center gap-4">
+
+{{-- Back to Pet --}}
+<a href="{{ route('pets.show', $pet) }}" 
+   class="py-2.5 px-5 text-sm font-medium text-white bg-gray-500 rounded-full hover:bg-gray-600 transition">
+    Back to Pet
+</a>
+
+{{-- Only vets can add appointment --}}
+@if(auth()->user()->role === 'vet')
+    <a href="{{ route('pets.appointments.create', $pet) }}"
+       class="py-2.5 px-5 text-sm font-medium text-gray-700 bg-gray-100 border rounded-full hover:bg-blue-100 transition">
+        Add Appointment
+    </a>
+@endif
+
+
+
+</div>
+
 
     </div>
 

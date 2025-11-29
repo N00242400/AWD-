@@ -28,6 +28,7 @@
             <!-- Vet can only edit/delete  -->
             @if(auth()->user()->role === 'vet')
 
+            
                 <a href="{{ route('appointments.edit', $appointment) }}"
                    class="px-4 py-2 bg-gray-100 border rounded hover:bg-blue-100">
                     Edit Appointment
