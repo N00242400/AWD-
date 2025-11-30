@@ -39,6 +39,9 @@ class OwnerController extends Controller
      */
 public function store(Request $request)
 {
+    if (auth()->user()->role !== 'admin' && auth()->user()->role !== 'vet') {
+        return redirect()->route('owners.index')->with('error', 'Access denied.');
+    }
     // Validate input
     $request->validate([
         'name' => 'required|string|max:25',
@@ -118,18 +121,19 @@ public function store(Request $request)
             'email' => 'required|email|max:55|unique:owners,email,' . $owner->id,
             'phone_number' => 'required|string|max:15',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
+            'pets' => 'array', // Validate pets as an array//
         ]);
     
        // Handle image upload if new image provided
        if ($request->hasFile('image')) {
         // Delete old image if it exists
-        if ($pet->image && file_exists(public_path('images/' . $pet->image))) {
-            unlink(public_path('images/' . $pet->image));
+        if ($owner->image && file_exists(public_path('images/' . $owner->image))) {
+            unlink(public_path('images/' . $owner->image));
         }
         // Save new image
         $imageName = time() . '.' . $request->image->extension();
         $request->image->move(public_path('images'), $imageName);
-        $pet->image = $imageName;
+        $owner->image = $imageName;
     }
     
         $owner->name = $request->name;
@@ -151,6 +155,9 @@ public function store(Request $request)
     {
         if (auth()->user()->role !== 'admin' && auth()->user()->role !== 'vet') {
             return redirect()->route('owners.index')->with('error', 'Access denied.');
+        }
+        if ($owner->image && file_exists(public_path('images/' . $owner->image))) {
+            unlink(public_path('images/' . $owner->image));
         }
         // Delete owner image if exists
         $owner->pets()->detach(); // Detach all associated pets

@@ -36,10 +36,6 @@ class Pet extends Model
     }
 
 
-
-
-
-
 //pet can have many appointments//
     public function appointments()
     {
