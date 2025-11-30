@@ -23,7 +23,7 @@
             <!-- Edit/Delete Buttons -->
             <div class="mt-8 flex justify-center gap-4">
 
-                @if(auth()->id() === $owner->user_id || auth()->user()->role === 'admin' || auth()->user()->role === 'vet')
+            @if(auth()->user()->role === 'admin' || auth()->user()->role === 'vet')
                     <!-- Edit Button -->
                     <a href="{{ route('owners.edit', $owner) }}"
                     class="py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-full border border-gray-200 
