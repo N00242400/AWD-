@@ -13,6 +13,7 @@ class OwnerSeeder extends Seeder
      */
     public function run(): void
     {
+        //inserting fake owners data//
         Owner::insert([
             ['name' => 'John Long','email'=> 'johnlong@gmail.com','phone_number'=>'0833213345','image'=>'johnlong.png'],
             ['name' => 'Emily Carter', 'email' => 'emilycarter@gmail.com', 'phone_number' => '0812345678', 'image' => 'emilycarter.png'],
